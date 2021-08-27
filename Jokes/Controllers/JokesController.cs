@@ -32,9 +32,9 @@ namespace Jokes.Controllers
         }
 
         //POST: Jokes/ShowSearchResults
-        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
+        public string ShowSearchResults(String SearchPhrase)
         {
-            return View();
+            return "you enter " + SearchPhrase;
         }
 
 
