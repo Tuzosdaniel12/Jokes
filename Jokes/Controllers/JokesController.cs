@@ -25,6 +25,19 @@ namespace Jokes.Controllers
             return View(await _context.Joke.ToListAsync());
         }
 
+        //Get: Jokes/ShowSearchForm
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        }
+
+        //POST: Jokes/ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
+        {
+            return View();
+        }
+
+
         // GET: Jokes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
