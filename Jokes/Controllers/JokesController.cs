@@ -32,9 +32,9 @@ namespace Jokes.Controllers
         }
 
         //POST: Jokes/ShowSearchResults
-        public string ShowSearchResults(String SearchPhrase)
+        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
         {
-            return "you enter " + SearchPhrase;
+            return View("Index", await _context.Joke.Where(j => j.JokeQuestion.Contains(SearchPhrase)).ToListAsync());
         }
 
 
@@ -57,6 +57,7 @@ namespace Jokes.Controllers
         }
 
         // GET: Jokes/Create
+        [Microsoft.AspNetCore.Authorization.Authorize]
         public IActionResult Create()
         {
             return View();
@@ -65,6 +66,7 @@ namespace Jokes.Controllers
         // POST: Jokes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Microsoft.AspNetCore.Authorization.Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,JokeQuestion,JokeAnswer")] Joke joke)
@@ -79,6 +81,8 @@ namespace Jokes.Controllers
         }
 
         // GET: Jokes/Edit/5
+
+        [Microsoft.AspNetCore.Authorization.Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,8 +101,10 @@ namespace Jokes.Controllers
         // POST: Jokes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Microsoft.AspNetCore.Authorization.Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,JokeQuestion,JokeAnswer")] Joke joke)
         {
             if (id != joke.Id)
@@ -130,6 +136,7 @@ namespace Jokes.Controllers
         }
 
         // GET: Jokes/Delete/5
+        [Microsoft.AspNetCore.Authorization.Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +157,7 @@ namespace Jokes.Controllers
         // POST: Jokes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Microsoft.AspNetCore.Authorization.Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var joke = await _context.Joke.FindAsync(id);
